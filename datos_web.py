@@ -10,12 +10,13 @@
 
 import requests
 from lxml import html
-
-url = "https://www.timeaanddate.com/worldclock/españa/madrid"
-page = requests.get(url)
-print('\n\n\nhtml:\n', page.text, '\n\n\n')
-tree = html.fromstring(page, content)
-print('\n\n\ntree:\n', tree, '\n\n\n')
-
-time = tree.xpath('//span[@class="h1"]/text()')
-print("\nHora: ", time)
+class GetWebData:
+    def __init__(self, url):
+        self.url = url
+    def get_data(self, parser):
+        page = requests.get(self.url)
+        tree = html.fromstring(page.content)
+        print("parser:\n", parser)
+        print("url:\n", self.url)
+        data = tree.xpath(parser)
+        return data
